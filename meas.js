@@ -61,9 +61,8 @@ Tracker.prototype = {
         return current;
       }
     }
-
   }
-}
+};
 
 
 function TrackerManager() {
