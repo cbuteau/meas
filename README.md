@@ -2,6 +2,25 @@
 
 A wrapper around the performance API.
 
+# Badges
+
+### Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/github/cbuteau/typecodes/badge.svg)](https://coveralls.io/github/cbuteau/meas)
+
+### Circle CI Build
+
+[![CircleCI](https://circleci.com/gh/cbuteau/meas.svg?style=svg)](https://circleci.com/gh/cbuteau/meas)
+
+### npm Version
+
+[![npm version](http://img.shields.io/npm/v/meas.svg?style=flat)](https://npmjs.org/package/meas "View this project on npm")
+
+
+### npm big badge
+
+[![NPM](https://nodei.co/npm/meas.png)](https://nodei.co/npm/meas/)
+
 
 ## Concept
 
