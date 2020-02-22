@@ -6,7 +6,7 @@ A wrapper around the performance API.
 
 ### Coveralls
 
-[![Coverage Status](https://coveralls.io/repos/github/cbuteau/typecodes/badge.svg)](https://coveralls.io/github/cbuteau/meas)
+[![Coverage Status](https://coveralls.io/repos/github/cbuteau/meas/badge.svg)](https://coveralls.io/github/cbuteau/meas)
 
 ### Circle CI Build
 
