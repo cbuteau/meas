@@ -1,0 +1,45 @@
+{
+  "name": "meas",
+  "version": "1.0.0",
+  "description": "A wrapper around the performance API.",
+  "main": "meas.js",
+  "scripts": {
+    "test": ".\\node_modules\\.bin\\karma start",
+    "test.ci": ".\\node_modules\\.bin\\karma start --single-run",
+    "minify": "node .\\node_modules\\uglify-js\\bin\\uglifyjs -c -o ./meas.min.js meas.js",
+    "debug": "node --inspect-brk node_modules/jasmine/bin/jasmine.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbuteau/meas.git"
+  },
+  "keywords": [
+    "performance"
+  ],
+  "author": "cbuteau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cbuteau/meas/issues"
+  },
+  "homepage": "https://github.com/cbuteau/meas#readme",
+  "devDependencies": {
+    "amdefine": "1.0.0",
+    "istanbul": "^0.4.5",
+    "jasmine": "^3.5.0",
+    "jasmine-core": "^3.5.0",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-cli": "^2.0.0",
+    "karma-coveralls": "^2.1.0",
+    "karma-firefox-launcher": "1.1.0",
+    "karma-jasmine": "1.0.2",
+    "karma-requirejs": "^1.1.0",
+    "requirejs": "^2.3.6",
+    "uglify-js": "^3.6.0"
+  },
+  "dependencies": {
+    "karma-coverage": "1.1.2",
+    "karma-jasmine-html-reporter": "1.4.2",
+    "lodash": "4.17.14"
+  }
+}
