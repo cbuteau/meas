@@ -21,7 +21,6 @@ A wrapper around the performance API.
 
 [![NPM](https://nodei.co/npm/meas.png)](https://nodei.co/npm/meas/)
 
-
 ## Concept
 
 This is the result of me making a couple of these wrappers at work.
