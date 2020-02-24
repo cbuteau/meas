@@ -54,6 +54,14 @@ Tracker.prototype = {
     return this.getmeas();
   },
   getmeas: function() {
+    var meas = this._findmeas();
+    if (!meas) {
+      this._perfPtr.measure(this.measName, this.startName, this.endName);
+      meas = this._findmeas();
+    }
+    return meas;
+  },
+  _findmeas: function() {
     var measures = this._perfPtr.getEntriesByType('measure');
     for (var i = 0; i < measures.length; i++) {
       var current = measures[i];
