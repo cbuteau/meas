@@ -117,15 +117,6 @@ TrackerManager.prototype = {
       return this.trackers[name].meas();
     }
   },
-  getmeas: function(name) {
-    if (!this.enabled) {
-      return;
-    }
-
-    if (this.trackers[name]) {
-      return this.trackers[name].getmeas();
-    }
-  },
   enable: function(enabled) {
     this.enabled = enabled;
   }
