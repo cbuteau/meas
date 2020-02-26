@@ -80,7 +80,7 @@ function TrackerManager() {
 
 TrackerManager.prototype = {
   setPerfPtr: function(object) {
-    if (object.mark && object.measure && object.getEntryByType) {
+    if (object.mark && object.measure && object.getEntriesByType) {
       this.perPtr = object;
     }
   },
