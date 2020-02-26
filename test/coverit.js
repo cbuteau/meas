@@ -52,6 +52,10 @@ describe('Exercise API', function() {
   });
 
   it ('Set other perf pointer', function(done) {
+
+    // can't just set it...needs to support an interface.
+    meas.setPerfPtr({});
+    
     // some teams like to measure off this...
     meas.setPerfPtr(window.top.performance);
     meas.start('loop');
