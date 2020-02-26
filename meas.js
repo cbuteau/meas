@@ -41,6 +41,7 @@ function Tracker(perPtr, name) {
   this.startName = name + '_start';
   this.endName = name + '_end';
   this.measName = name + '_meas';
+  this.hasMeasured = false;
   this._perfPtr.mark(this.startName);
 }
 
@@ -50,16 +51,14 @@ Tracker.prototype = {
   },
   endnmeas: function(name) {
     this.end();
-    this._perfPtr.measure(this.measName, this.startName, this.endName);
-    return this.getmeas();
+    return this.meas();
   },
-  getmeas: function() {
-    var meas = this._findmeas();
-    if (!meas) {
+  meas: function() {
+    if (!this.hasMeasured) {
       this._perfPtr.measure(this.measName, this.startName, this.endName);
-      meas = this._findmeas();
+      this.hasMeasured = true;
     }
-    return meas;
+    return this._findmeas();
   },
   _findmeas: function() {
     var measures = this._perfPtr.getEntriesByType('measure');
@@ -107,6 +106,15 @@ TrackerManager.prototype = {
 
     if (this.trackers[name]) {
       return this.trackers[name].endnmeas();
+    }
+  },
+  meas: function(name) {
+    if (!this.enabled) {
+      return;
+    }
+
+    if (this.trackers[name]) {
+      return this.trackers[name].meas();
     }
   },
   getmeas: function(name) {
