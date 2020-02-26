@@ -21,6 +21,8 @@ describe('Exercise API', function() {
       console.log(array[i]);
     }
     meas.end('loop');
+    expect(meas.endnmeas('loop')).toBe(undefined);
+    meas.meas('loop');
     var measures = window.performance.getEntriesByType('measure');
     expect(measures.length).toBe(0);
   });

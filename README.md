@@ -30,17 +30,20 @@ I wanted to take lessons learned and simplify it for other peoples usage.
 
 ```javascript
 {
+  // to set the perfPtr to another source some teams prefer window.top.performance.
+  setPerfPtr: function(object) {},
+  
   // start a measure with a mark.
   start: function(name) {},
 
   // end a measure with just a mark.
   end: function(name) {},
 
-  // end a meausre and calculate the measure and return the entry (for testing)
+  // end and calculate the measure and return the entry (for testing)
   endnmeas: function(name) {},
 
   // get measure later.
-  getmeas: function(name) {},
+  meas: function(name) {},
 
   // enable or diable...makes other methods pass throughs.
   enable: function(enabled) {},
