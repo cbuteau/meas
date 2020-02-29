@@ -35,7 +35,7 @@ describe('Helper API', function() {
       var marks = meas.perf.ls.mark();
       expect(marks.length).toBe(0);
       done();
-    }, 500);
+    }, 3000);
   });
 
   it ('Now clear measures', function(done) {
@@ -45,7 +45,7 @@ describe('Helper API', function() {
       var meass = meas.perf.ls.meas();
       expect(meass.length).toBe(0);
       done();
-    }, 500);
+    }, 3000);
 
   });
 
