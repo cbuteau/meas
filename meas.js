@@ -230,6 +230,13 @@ TrackerManager.prototype = {
       return this.trackers[name].meas();
     }
   },
+  specificMeas: function(name, startMarkName, endMarkName) {
+    this.perfPtr.measure(name, startMarkName, endMarkName);
+    var meass = this.perfPtr.getEntriesByType('measure');
+    return meass.filter(function(m) {
+      return m.name === name;
+    });
+  },
   withMeas: function(name, callback) {
     try {
       this.start(name);

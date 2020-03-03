@@ -32,7 +32,7 @@ I wanted to take lessons learned and simplify it for other peoples usage.
 {
   // to set the perfPtr to another source some teams prefer window.top.performance.
   setPerfPtr: function(object) {},
-  
+
   // start a measure with a mark.
   start: function(name) {},
 
@@ -47,6 +47,22 @@ I wanted to take lessons learned and simplify it for other peoples usage.
 
   // enable or diable...makes other methods pass throughs.
   enable: function(enabled) {},
+
+  // utilities to make it simpler to see the existing marks and measures.
+  perf: {
+    ls: {
+      meas: function () {},
+      mark: function() {}
+    },
+    clr: {
+      meas: function () {},
+      mark: function() {}
+    }
+    find: {
+      meas: function () {},
+      mark: function() {}
+    }
+  },
 
   // duck typing flags for browser determination..for testing.
   BrowserFlags: {
