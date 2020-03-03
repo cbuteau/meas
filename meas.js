@@ -75,25 +75,31 @@ Tracker.prototype = {
 };
 
 function ClearHelper(perfPtr) {
-  this.perPtr = perfPtr;
+  this.perfPtr = perfPtr;
 }
 
 ClearHelper.prototype = {
+  _set: function(perfPtr) {
+    this.perfPtr = perfPtr;
+  },
   mark: function() {
-    this.perPtr.clearMarks();
+    this.perfPtr.clearMarks();
   },
   meas: function() {
-    this.perPtr.clearMeasures();
+    this.perfPtr.clearMeasures();
   }
 };
 
 function LsHelper(perfPtr) {
-  this.perPtr = perfPtr;
+  this.perfPtr = perfPtr;
 }
 
 LsHelper.prototype = {
+  _set: function(perfPtr) {
+    this.perfPtr = perfPtr;
+  },
   mark: function() {
-    var marks = this.perPtr.getEntriesByType(MARK_TYPE);
+    var marks = this.perfPtr.getEntriesByType(MARK_TYPE);
     var result = [];
     for (var i = 0; i < marks.length ; i++) {
       result.push(marks[i].name);
@@ -101,7 +107,7 @@ LsHelper.prototype = {
     return result;
   },
   meas: function() {
-    var marks = this.perPtr.getEntriesByType(MEAS_TYPE);
+    var marks = this.perfPtr.getEntriesByType(MEAS_TYPE);
     var result = [];
     for (var i = 0; i < marks.length ; i++) {
       result.push(marks[i].name);
@@ -115,8 +121,11 @@ function FindHelper(perfPtr) {
 }
 
 FindHelper.prototype = {
+  _set: function(perfPtr) {
+    this.perfPtr = perfPtr;
+  },
   mark: function(context) {
-    var marks = this.perPtr.getEntriesByType(MARK_TYPE);
+    var marks = this.perfPtr.getEntriesByType(MARK_TYPE);
     var result = [];
     for (var i = 0; i < marks.length ; i++) {
       var current = marks[i];
@@ -127,7 +136,7 @@ FindHelper.prototype = {
     return result;
   },
   meas: function(context) {
-    var meas = this.perPtr.getEntriesByType(MEAS_TYPE);
+    var meas = this.perfPtr.getEntriesByType(MEAS_TYPE);
     var result = [];
     for (var i = 0; i < meas.length ; i++) {
       var current = meas[i];
@@ -147,6 +156,12 @@ function PerfHelper(perfPtr) {
 }
 
 PerfHelper.prototype = {
+  _set: function(perfPtr) {
+    this._perfPtr = perfPtr;
+    this.clearHelper._set(perfPtr);
+    this.lsHelper._set(perfPtr);
+    this.findHelper._set(perfPtr);
+  }
 };
 
 Object.defineProperties(PerfHelper.prototype, {
@@ -179,6 +194,7 @@ TrackerManager.prototype = {
   setPerfPtr: function(object) {
     if (object.mark && object.measure && object.getEntriesByType) {
       this.perfPtr = object;
+      this.perfHelper._set(object);
     }
   },
   start: function(name) {
@@ -212,6 +228,14 @@ TrackerManager.prototype = {
 
     if (this.trackers[name]) {
       return this.trackers[name].meas();
+    }
+  },
+  withMeas: function(name, callback) {
+    try {
+      this.start(name);
+      callback();
+    } finally {
+      this.end(name);
     }
   },
   enable: function(enabled) {
