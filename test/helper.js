@@ -26,15 +26,14 @@ describe('Helper API', function() {
 
     var marks = meas.perf.ls.mark();
     // clear is not working in headless firefox.
-    if ((meas.OsFlags.isWin || meas.OsFlags.isLinux) && meas.BrowserFlags.isFirefox) {
-      console.log('ff and win');
+    if ((meas.OsFlags.isWin || meas.OsFlags.isUnix) && meas.BrowserFlags.isFirefox) {
       expect(marks.length).toBe(4);
     } else {
       expect(marks.length).toBe(2);
     }
 
     var meass = meas.perf.ls.meas();
-    if ((meas.OsFlags.isWin || meas.OsFlags.isLinux) && meas.BrowserFlags.isFirefox) {
+    if ((meas.OsFlags.isWin || meas.OsFlags.isUnix) && meas.BrowserFlags.isFirefox) {
       expect(meass.length).toBe(2);
     } else {
       expect(meass.length).toBe(1);
