@@ -36,6 +36,22 @@ var BrowserFlags = {
 
 Object.freeze(BrowserFlags);
 
+// https://stackoverflow.com/questions/11219582/how-to-detect-my-browser-version-and-operating-system-using-javascript
+
+var isWin = (navigator.appVersion.indexOf("Win")!=-1);
+var isMac = (navigator.appVersion.indexOf("Mac")!=-1);
+var isLinux = (navigator.appVersion.indexOf("Linux")!=-1);
+var isUnix = (navigator.appVersion.indexOf("X11")!=-1);
+
+var OsFlags = {
+  isWin: isWin,
+  isMac: isMac,
+  isUnix: isUnix,
+  isLinux: isLinux
+};
+
+Object.freeze(OsFlags);
+
 var MEAS_TYPE = 'measure';
 var MARK_TYPE = 'mark';
 
@@ -129,7 +145,7 @@ FindHelper.prototype = {
     var result = [];
     for (var i = 0; i < marks.length ; i++) {
       var current = marks[i];
-      if (current.name.indexOf(context) !== 0) {
+      if (current.name.indexOf(context) !== -1) {
         result.push(current);
       }
     }
@@ -140,7 +156,7 @@ FindHelper.prototype = {
     var result = [];
     for (var i = 0; i < meas.length ; i++) {
       var current = meas[i];
-      if (current.name.indexOf(context) !== 0) {
+      if (current.name.indexOf(context) !== -1) {
         result.push(current);
       }
     }
@@ -185,16 +201,21 @@ Object.defineProperties(PerfHelper.prototype, {
 
 function TrackerManager() {
   this.trackers = {};
-  this.perfPtr = window.performance;
   this.perfHelper = new PerfHelper(this.perfPtr);
+  this.setPerfPtr(window.performance);
   this.enabled = true;
 }
 
 TrackerManager.prototype = {
   setPerfPtr: function(object) {
     if (object.mark && object.measure && object.getEntriesByType) {
-      this.perfPtr = object;
+      this._perfPtr = object;
       this.perfHelper._set(object);
+      if (object.onresourcetimingbufferfull) {
+        object.onresourcetimingbufferfull  = function() {
+          console.error('You cannot make more marks and measures try upping your buffersize');
+        }
+      }
     }
   },
   start: function(name) {
@@ -255,9 +276,25 @@ Object.defineProperties(TrackerManager.prototype, {
     value: BrowserFlags,
     writable: false,
   },
+  OsFlags: {
+    value: OsFlags,
+    writable: false
+  },
   perf: {
     get: function() {
       return this.perfHelper;
+    }
+  },
+  perfPtr: {
+    get: function() {
+      return this._perfPtr;
+    }
+  },
+  buffersize: {
+    set: function(value) {
+      if (this._perfPtr.setResourceTimingBufferSize) {
+        this._perfPtr.setResourceTimingBufferSize(value);
+      }
     }
   }
 });

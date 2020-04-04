@@ -6,6 +6,10 @@ describe('Helper API', function() {
       meas = measLoad;
       meas.perf.clr.mark();
       meas.perf.clr.meas();
+
+      console.log(meas.BrowserFlags);
+      console.log(meas.OsFlags);
+
       done();
     });
   });
@@ -21,10 +25,20 @@ describe('Helper API', function() {
 
 
     var marks = meas.perf.ls.mark();
-    expect(marks.length).toBe(2);
+    // clear is not working in headless firefox.
+    if (meas.OsFlags.isWin && meas.BrowserFlags.isFirefox) {
+      console.log('ff and win');
+      expect(marks.length).toBe(4);
+    } else {
+      expect(marks.length).toBe(2);
+    }
 
     var meass = meas.perf.ls.meas();
-    expect(meass.length).toBe(1);
+    if (meas.OsFlags.isWin && meas.BrowserFlags.isFirefox) {
+      expect(meass.length).toBe(2);
+    } else {
+      expect(meass.length).toBe(1);
+    }
 
   });
 
@@ -47,6 +61,24 @@ describe('Helper API', function() {
       done();
     }, 3000);
 
+  });
+
+  it ('Find', function() {
+    meas.perf.clr.meas();
+    meas.perf.clr.mark();
+    meas.start('loop');
+
+    var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+    for ( var i = 0; i < array.length; i++) {
+      console.log(array[i]);
+    }
+    var data = meas.endnmeas('loop');
+
+    var marks = meas.perf.find.mark('loop');
+    expect(marks.length).toBe(2);
+
+    var meass = meas.perf.find.meas('loop');
+    expect(meass.length).toBe(1);
   });
 
 });

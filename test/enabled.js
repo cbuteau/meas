@@ -3,7 +3,8 @@ describe('Exercise API', function() {
   beforeAll(function(done) {
     require(['meas'], function(measLoad) {
       meas = measLoad;
-      window.performance.clearMeasures();
+      meas.perfPtr.clearMeasures();
+      //window.performance.clearMeasures();
       meas.enable(false);
       done();
     });
@@ -23,7 +24,7 @@ describe('Exercise API', function() {
     meas.end('loop');
     expect(meas.endnmeas('loop')).toBe(undefined);
     meas.meas('loop');
-    var measures = window.performance.getEntriesByType('measure');
+    var measures = meas.perfPtr.getEntriesByType('measure');
     expect(measures.length).toBe(0);
   });
 });
