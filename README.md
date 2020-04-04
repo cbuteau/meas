@@ -21,7 +21,6 @@ A wrapper around the performance API.
 
 [![NPM](https://nodei.co/npm/meas.png)](https://nodei.co/npm/meas/)
 
-
 ## Concept
 
 This is the result of me making a couple of these wrappers at work.
@@ -31,20 +30,39 @@ I wanted to take lessons learned and simplify it for other peoples usage.
 
 ```javascript
 {
+  // to set the perfPtr to another source some teams prefer window.top.performance.
+  setPerfPtr: function(object) {},
+
   // start a measure with a mark.
   start: function(name) {},
 
   // end a measure with just a mark.
   end: function(name) {},
 
-  // end a meausre and calculate the measure and return the entry (for testing)
+  // end and calculate the measure and return the entry (for testing)
   endnmeas: function(name) {},
 
   // get measure later.
-  getmeas: function(name) {},
+  meas: function(name) {},
 
   // enable or diable...makes other methods pass throughs.
   enable: function(enabled) {},
+
+  // utilities to make it simpler to see the existing marks and measures.
+  perf: {
+    ls: {
+      meas: function () {},
+      mark: function() {}
+    },
+    clr: {
+      meas: function () {},
+      mark: function() {}
+    }
+    find: {
+      meas: function () {},
+      mark: function() {}
+    }
+  },
 
   // duck typing flags for browser determination..for testing.
   BrowserFlags: {
