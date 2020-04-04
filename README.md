@@ -75,6 +75,14 @@ I wanted to take lessons learned and simplify it for other peoples usage.
     isBlink: isBlink  
   }
 
+  // userAgent sniffing to determine OS for specifying between
+  // build system and desktop with expects.
+  OsFlags: {
+    isWin: isWin,
+    isMac: isMac,
+    isUnix: isUnix,
+    isLinux: isLinux    
+  }
 };
 
 ```
