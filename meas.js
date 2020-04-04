@@ -132,6 +132,8 @@ if (typeof define === 'function' && define.amd) {
   define(function() {
     return meas;
   });
+  // also make global to use from the console.
+  window.meas = meas;
 // } else if (typeof exports === 'object') {
 //   module.exports = exposed;
 } else {
