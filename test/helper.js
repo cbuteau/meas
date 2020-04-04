@@ -7,10 +7,11 @@ describe('Helper API', function() {
       meas.perf.clr.mark();
       meas.perf.clr.meas();
 
-      console.log(meas.BrowserFlags);
-      console.log(meas.OsFlags);
+      //console.log(meas.BrowserFlags);
+      //console.log(meas.OsFlags);
 
-      done();
+      setTimeout(done, 500);
+      //done();
     });
   });
 
@@ -26,14 +27,14 @@ describe('Helper API', function() {
 
     var marks = meas.perf.ls.mark();
     // clear is not working in headless firefox.
-    if ((meas.OsFlags.isWin || meas.OsFlags.isUnix) && meas.BrowserFlags.isFirefox) {
+    if (meas.OsFlags.isUnix && meas.BrowserFlags.isFirefox) {
       expect(marks.length).toBe(4);
     } else {
       expect(marks.length).toBe(2);
     }
 
     var meass = meas.perf.ls.meas();
-    if ((meas.OsFlags.isWin || meas.OsFlags.isUnix) && meas.BrowserFlags.isFirefox) {
+    if (meas.OsFlags.isUnix && meas.BrowserFlags.isFirefox) {
       expect(meass.length).toBe(2);
     } else {
       expect(meass.length).toBe(1);
