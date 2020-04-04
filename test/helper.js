@@ -34,7 +34,7 @@ describe('Helper API', function() {
     }
 
     var meass = meas.perf.ls.meas();
-    if (meas.OsFlags.isWin && meas.BrowserFlags.isFirefox) {
+    if ((meas.OsFlags.isWin || meas.OsFlags.isUnix) && meas.BrowserFlags.isFirefox) {
       expect(meass.length).toBe(2);
     } else {
       expect(meass.length).toBe(1);
