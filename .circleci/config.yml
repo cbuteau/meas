@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/gitsrc
     docker:
-      - image: circleci/node:6-browsers
+      - image: circleci/node:9-browsers
     environment:
       JVM_OPTS: -Xmx3200m
       NODE_ENV: false
