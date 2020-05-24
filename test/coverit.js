@@ -22,7 +22,7 @@ describe('Exercise API', function() {
       expect(data.duration).toBeLessThan(4.0);
 
     } else if (meas.BrowserFlags.isFirefox) {
-      expect(data.duration).toBeLessThan(6.1);
+      expect(data.duration).toBeLessThan(7.1);
 
     }
 
