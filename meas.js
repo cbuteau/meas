@@ -131,9 +131,10 @@ Tracker.prototype = {
   }
 };
 
-function TrackerSection(perfPtr, name) {
+function TrackerSection(perfPtr, name, trackerPrefix) {
   this.perfPtr = perfPtr;
   this.name = name;
+  this.trackerPrefix = trackerPrefix;
   this.enabled = true;
   this.trackers = {};
   this.sections = {};
@@ -145,7 +146,9 @@ TrackerSection.prototype = {
       return;
     }
 
-    this.trackers[trackerName] = new Tracker(this.perfPtr, trackerName, options);
+    var prefixedName = this.trackerPrefix + '.' + trackerName;
+
+    this.trackers[trackerName] = new Tracker(this.perfPtr, prefixedName, options);
   },
 
   end: function(trackerName) {
@@ -176,7 +179,8 @@ TrackerSection.prototype = {
     if (check) {
       return check;
     } else {
-      check = this.sections[name] = new TrackerSection(this.perfPtr, name);
+      var trackerPrefix = this.trackerPrefix + '.' + this.name;
+      check = this.sections[name] = new TrackerSection(this.perfPtr, name, trackerPrefix);
     }
 
     return check;
@@ -395,7 +399,7 @@ TrackerManager.prototype = {
     if (check) {
       return check;
     } else {
-      check = this.sections[name] = new TrackerSection(this.perfPtr, name);
+      check = this.sections[name] = new TrackerSection(this.perfPtr, name, name);
     }
 
     return check;
