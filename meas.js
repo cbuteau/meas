@@ -55,11 +55,14 @@ Object.freeze(OsFlags);
 var MEAS_TYPE = 'measure';
 var MARK_TYPE = 'mark';
 
-function Tracker(perPtr, name) {
+function Tracker(perPtr, name, options) {
   this._perfPtr = perPtr;
   this.startName = name + '_start';
   this.endName = name + '_end';
   this.measName = name + '_meas';
+  if (options) {
+    this.options = options;
+  }
   this.hasMeasured = false;
   this._perfPtr.mark(this.startName);
 }
@@ -87,8 +90,118 @@ Tracker.prototype = {
         return current;
       }
     }
+  },
+  dump: function(prefix) {
+    var measures = this._perfPtr.getEntriesByType(MEAS_TYPE);
+    var that = this;
+    var filtered = measures.filter(function(m) {
+      return m.name === that.measName;
+    });
+    var prefixPath = prefix || '';
+    if (this.options && this.options.stats) {
+      var sum = 0;
+      var min = Number.MAX_SAFE_INTEGER;
+      var max = Number.MIN_SAFE_INTEGER;
+      var len = filtered.length;
+      for (var i = 0; i < len; i++) {
+        var cur = filtered[i];
+        var dur = cur.duration;
+        sum += dur;
+        if (dur < min) {
+          min = dur;
+        }
+        if (dur > max) {
+          max = dur;
+        }
+      }
+      var avg = sum / len;
+
+      var formatted = 'name=' + prefixPath + '.' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max;
+      console.log(formatted);
+    } else {
+      var len = filtered.length;
+      if (len > 1) {
+        console.warn('there are more than one entry...maybe you should do stats');
+      }
+      var current = filtered[len - 1];
+      var formatted = 'name=' + prefixPath + '.' + this.name + ' value=' + current.duration;
+      console.log(formatted);
+    }
   }
 };
+
+function TrackerSection(name) {
+  this.name = name;
+  this.trackers = {};
+  this.sections = {};
+}
+
+TrackerSection.prototype = {
+  start: function(trackerName, options) {
+    if (!this.enabled) {
+      return;
+    }
+
+    this.trackers[name] = new Tracker(this.perfPtr, name, options);
+  },
+
+  end: function(trackerName) {
+    if (!this.enabled) {
+      return;
+    }
+
+    if (this.trackers[name]) {
+      this.trackers[name].end();
+    }
+  },
+
+  enable: function(enabled) {
+    this.enabled = enabled;
+
+    var sectionKeys = Object.keys(this.sections);
+    for (var j = 0; j < sectionKeys.length; j++) {
+      var sectionId = sectionKeys[j];
+      this.sections[sectionId].enable(enabled);
+    }
+  },
+
+  addOrGetSection: function(name) {
+    if (!this.enabled) {
+      return;
+    }
+    var check = this.sections[name];
+    if (check) {
+      return check;
+    } else {
+      check = this.sections[name] = new TrackerSection(name);
+    }
+
+    return check;
+  },
+
+  dump: function(prefix) {
+    var prefixPath = prefix || '';
+    if (prefixPath.length) {
+      prefixPath += '.' + this.name;
+    } else {
+      prefixPath = this.name;
+    }
+
+    var trackerKeys = Object.keys(this.trackers);
+    for (var i = 0; i < trackerKeys.length; i++) {
+      var trackerId = trackerKeys[i];
+      this.trackers[trackerId].dump(prefixPath);
+    }
+
+    var sectionKeys = Object.keys(this.sections);
+    for (var j = 0; j < sectionKeys.length; j++) {
+      var sectionId = sectionKeys[j];
+      this.sections[sectionId].dump(prefixPath);
+    }
+  }
+};
+
+// <editor-fold> Helpers
 
 function ClearHelper(perfPtr) {
   this.perfPtr = perfPtr;
@@ -198,9 +311,11 @@ Object.defineProperties(PerfHelper.prototype, {
   }
 });
 
+// </editor-fold> Helpers
 
 function TrackerManager() {
   this.trackers = {};
+  this.sections = {};
   this.perfHelper = new PerfHelper(this.perfPtr);
   this.setPerfPtr(window.performance);
   this.enabled = true;
@@ -214,7 +329,7 @@ TrackerManager.prototype = {
       if (object.onresourcetimingbufferfull) {
         object.onresourcetimingbufferfull  = function() {
           console.error('You cannot make more marks and measures try upping your buffersize');
-        }
+        };
       }
     }
   },
@@ -266,8 +381,33 @@ TrackerManager.prototype = {
       this.end(name);
     }
   },
+
+  addOrGetSection: function(name) {
+    if (!this.enabled) {
+      return;
+    }
+    var check = this.sections[name];
+    if (check) {
+      return check;
+    } else {
+      check = this.sections[name] = new TrackerSection(name);
+    }
+
+    return check;
+  },
+
   enable: function(enabled) {
     this.enabled = enabled;
+
+    var sectionKeys = Object.keys(this.sections);
+    for (var j = 0; j < sectionKeys.length; j++) {
+      var sectionId = sectionKeys[j];
+      this.sections[sectionId].enable(enabled);
+    }
+  },
+
+  dump: function() {
+    
   }
 };
 
