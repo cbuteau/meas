@@ -117,7 +117,7 @@ Tracker.prototype = {
       }
       var avg = sum / len;
 
-      var formatted = 'name=' + prefixPath + '.' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max;
+      var formatted = 'name=' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max;
       console.log(formatted);
     } else {
       var len2 = filtered.length;
@@ -125,7 +125,7 @@ Tracker.prototype = {
         console.warn('there are more than one entry...maybe you should do stats');
       }
       var current = filtered[len2 - 1];
-      var formatted2 = 'name=' + prefixPath + '.' + this.name + ' value=' + current.duration;
+      var formatted2 = 'name=' + this.name + ' value=' + current.duration;
       console.log(formatted2);
     }
   }
