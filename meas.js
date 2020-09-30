@@ -119,13 +119,13 @@ Tracker.prototype = {
       var formatted = 'name=' + prefixPath + '.' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max;
       console.log(formatted);
     } else {
-      var len = filtered.length;
-      if (len > 1) {
+      var len2 = filtered.length;
+      if (len2 > 1) {
         console.warn('there are more than one entry...maybe you should do stats');
       }
-      var current = filtered[len - 1];
-      var formatted = 'name=' + prefixPath + '.' + this.name + ' value=' + current.duration;
-      console.log(formatted);
+      var current = filtered[len2 - 1];
+      var formatted2 = 'name=' + prefixPath + '.' + this.name + ' value=' + current.duration;
+      console.log(formatted2);
     }
   }
 };
@@ -190,6 +190,8 @@ TrackerSection.prototype = {
     var trackerKeys = Object.keys(this.trackers);
     for (var i = 0; i < trackerKeys.length; i++) {
       var trackerId = trackerKeys[i];
+      var tracker = this.trackers[trackerId];
+      tracker.meas();
       this.trackers[trackerId].dump(prefixPath);
     }
 
