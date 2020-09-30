@@ -132,6 +132,7 @@ Tracker.prototype = {
 
 function TrackerSection(name) {
   this.name = name;
+  this.enabled = true;
   this.trackers = {};
   this.sections = {};
 }
