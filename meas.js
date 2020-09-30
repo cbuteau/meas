@@ -117,11 +117,12 @@ Tracker.prototype = {
       }
       var avg = sum / len;
 
-      var variance;
+      var variance = 0;
       for (var j = 0; j < len; j++) {
         var varcalc = filtered[j];
         variance += (varcalc.duration - avg) ^ 2;
       }
+      variance /= len;
 
       var stddev = Math.sqrt(variance);
 
