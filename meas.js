@@ -117,7 +117,15 @@ Tracker.prototype = {
       }
       var avg = sum / len;
 
-      var formatted = 'name=' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max;
+      var variance;
+      for (var j = 0; j < len; j++) {
+        var varcalc = filtered[j];
+        variance += (varcalc.duration - avg) ^ 2;
+      }
+
+      var stddev = Math.sqrt(variance);
+
+      var formatted = 'name=' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max + ' σ2=' + variance + ' σ=' + stddev;
       console.log(formatted);
     } else {
       var len2 = filtered.length;
