@@ -130,7 +130,8 @@ Tracker.prototype = {
   }
 };
 
-function TrackerSection(name) {
+function TrackerSection(perfPtr, name) {
+  this.perfPtr = perfPtr;
   this.name = name;
   this.enabled = true;
   this.trackers = {};
@@ -174,7 +175,7 @@ TrackerSection.prototype = {
     if (check) {
       return check;
     } else {
-      check = this.sections[name] = new TrackerSection(name);
+      check = this.sections[name] = new TrackerSection(this.perfPtr, name);
     }
 
     return check;
@@ -393,7 +394,7 @@ TrackerManager.prototype = {
     if (check) {
       return check;
     } else {
-      check = this.sections[name] = new TrackerSection(name);
+      check = this.sections[name] = new TrackerSection(this.perfPtr, name);
     }
 
     return check;
