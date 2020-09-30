@@ -407,7 +407,11 @@ TrackerManager.prototype = {
   },
 
   dump: function() {
-    
+    var sectionKeys = Object.keys(this.sections);
+    for (var j = 0; j < sectionKeys.length; j++) {
+      var sectionId = sectionKeys[j];
+      this.sections[sectionId].dump();
+    }
   }
 };
 
