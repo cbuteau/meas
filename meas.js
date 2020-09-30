@@ -145,7 +145,7 @@ TrackerSection.prototype = {
       return;
     }
 
-    this.trackers[name] = new Tracker(this.perfPtr, name, options);
+    this.trackers[trackerName] = new Tracker(this.perfPtr, name, options);
   },
 
   end: function(trackerName) {
@@ -153,8 +153,8 @@ TrackerSection.prototype = {
       return;
     }
 
-    if (this.trackers[name]) {
-      this.trackers[name].end();
+    if (this.trackers[trackerName]) {
+      this.trackers[trackerName].end();
     }
   },
 
