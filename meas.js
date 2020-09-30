@@ -145,7 +145,7 @@ TrackerSection.prototype = {
       return;
     }
 
-    this.trackers[trackerName] = new Tracker(this.perfPtr, name, options);
+    this.trackers[trackerName] = new Tracker(this.perfPtr, trackerName, options);
   },
 
   end: function(trackerName) {
