@@ -474,6 +474,9 @@ var meas;
 
 if (!meas) {
   meas = new TrackerManager();
+  // global to both the possible frame and the console.
+  window.meas = meas;
+  window.top.meas = meas;
 }
 
 // API does not work in nodejs...so only support
@@ -483,9 +486,9 @@ if (typeof define === 'function' && define.amd) {
     return meas;
   });
   // also make global to use from the console.
-  window.meas = meas;
+  //window.meas = meas;
 // } else if (typeof exports === 'object') {
 //   module.exports = exposed;
 } else {
-  window.meas = meas;
+  //window.meas = meas;
 }
