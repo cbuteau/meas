@@ -57,6 +57,7 @@ var MARK_TYPE = 'mark';
 
 function Tracker(perPtr, name, options) {
   this._perfPtr = perPtr;
+  this.name = name;
   this.startName = name + '_start';
   this.endName = name + '_end';
   this.measName = name + '_meas';
