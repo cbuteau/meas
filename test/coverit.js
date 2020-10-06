@@ -1,11 +1,14 @@
-var meas;
+//var meas;
 describe('Exercise API', function() {
   beforeAll(function(done) {
-    require(['meas'], function(measLoad) {
-      meas = measLoad;
-      meas.enable(true);
-      done();
-    });
+    // require(['meas'], function(measLoad) {
+    //   meas = measLoad;
+    //   meas.enable(true);
+    //   done();
+    // });
+
+    meas.enable(true);
+    done();
   });
 
   it ('Run loop', function() {
@@ -43,7 +46,7 @@ describe('Exercise API', function() {
       if (meas.BrowserFlags.isChrome) {
         expect(data.duration).toBeLessThan(4.0);
       } else if (meas.BrowserFlags.isFirefox) {
-        expect(data.duration).toBeLessThan(5.1);
+        expect(data.duration).toBeLessThan(7.1);
       }
       done();
     }, 1000);

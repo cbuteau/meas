@@ -1,13 +1,18 @@
-var meas;
+//var meas;
 describe('Exercise API', function() {
   beforeAll(function(done) {
-    require(['meas'], function(measLoad) {
-      meas = measLoad;
-      meas.perfPtr.clearMeasures();
-      //window.performance.clearMeasures();
-      meas.enable(false);
-      done();
-    });
+    // require(['meas'], function(measLoad) {
+    //   meas = measLoad;
+    //   meas.perfPtr.clearMeasures();
+    //   //window.performance.clearMeasures();
+    //   meas.enable(false);
+    //   done();
+    // });
+    meas.perfPtr.clearMeasures();
+    //window.performance.clearMeasures();
+    meas.enable(false);
+    done();
+
   });
 
   afterAll(function() {

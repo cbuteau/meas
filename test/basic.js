@@ -1,9 +1,12 @@
-var meas;
+//var meas;
 describe('Exercise API', function() {
-  beforeAll(function(done) {
-    require(['meas'], function(measLoad) {
-      meas = measLoad;
-      done();
+  beforeAll(function() {
+    return new Promise(function(resolve, reject) {
+      // require(['meas'], function(measLoad) {
+      //   meas = measLoad;
+      //   //done();
+      // });
+      resolve();
     });
   });
 
