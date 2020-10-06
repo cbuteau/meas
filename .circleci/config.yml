@@ -24,7 +24,8 @@ jobs:
       - run:
           name: run test
           command: npm run test.ci
-      - store_test_results
+      - store_test_results:
+          path: /tmp/test-results
       - store_artifacts:
           path: coverage
       - save_cache:
