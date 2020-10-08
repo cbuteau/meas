@@ -48,6 +48,9 @@ I wanted to take lessons learned and simplify it for other peoples usage.
   // enable or diable...makes other methods pass throughs.
   enable: function(enabled) {},
 
+  // for sectioning off the code into different trackers.
+  addOrGetSection: function(name) {},
+
   // utilities to make it simpler to see the existing marks and measures.
   perf: {
     ls: {
@@ -84,5 +87,34 @@ I wanted to take lessons learned and simplify it for other peoples usage.
     isLinux: isLinux    
   }
 };
+
+```
+
+## Globals
+
+The intention of this library was always to install a global so in the console you could type meas.<apicall>()
+
+Upon deploying in a work enviromnet that used frames I found that I not only had to set window.<globalname> but window.top.<globalname> so it was ALWAYS available in the console.
+
+
+## Sections
+
+Upond revisting this I found it was too flat and I kept making the tracker ids longer and long to distinguish them in analysisc.
+
+For sections the start() end() methods exist and a dump() method.
+
+### Usage
+
+```javascript
+var section = meas.addOrGetSection('app').addOrGetSection('algorithms');
+
+// If this code gets executed multiple times you want to collect ALL the measurements an perform avergae calculations on them.
+// this is done by passing options = { stats: true }
+section.start('loop', { stats: true });
+var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+for ( var i = 0; i < array.length; i++) {
+  console.log(array[i]);
+}
+section.end('loop');
 
 ```
