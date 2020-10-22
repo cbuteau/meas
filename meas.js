@@ -135,7 +135,7 @@ Tracker.prototype = {
         stddev: stddev
       };
 
-      var formatted = 'name=' + this.name + ' cnt=' + len + ' avg=' + avg + ' min=' + min + ' max=' + max + ' σ2=' + variance + ' σ=' + stddev;
+      var formatted = 'name=' + this.name + ', cnt=' + len + ' avg=' + avg + ', min=' + min + ', max=' + max + ', σ2=' + variance + ', σ=' + stddev;
       console.log(formatted);
     } else {
       var len2 = filtered.length;
@@ -148,7 +148,7 @@ Tracker.prototype = {
         duration: current.duration
       };
 
-      var formatted2 = 'name=' + this.name + ' value=' + current.duration;
+      var formatted2 = 'name=' + this.name + ', value=' + current.duration;
       console.log(formatted2);
     }
   }
