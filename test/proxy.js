@@ -11,7 +11,7 @@ describe('Exercise API', function() {
     });
   });
 
-  it ('RUn loop', function() {
+  it ('RUn loop', function(done) {
     //meas.start('loop');
     var track = section.create('loop');
     var array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
@@ -20,7 +20,10 @@ describe('Exercise API', function() {
     }
     track.end();
     section.dump();
-    expect(section.trackers.loop.calculated.duration / 1000).toBeLessThan(4.0);
+    setTimeout(function() {
+      expect(section.trackers.loop.calculated.duration / 1000).toBeLessThan(4.0);
+      done();      
+    }, 50)
     //var data = meas.endnmeas('loop');
 
     // if (meas.BrowserFlags.isChrome) {
