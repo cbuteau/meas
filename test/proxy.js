@@ -1,6 +1,7 @@
 describe('Exercise API', function() {
   var section;
   beforeAll(function() {
+    meas.enable(true);
     section = meas.addOrGetSection('proxy');
     return new Promise(function(resolve, reject) {
       // require(['meas'], function(measLoad) {
@@ -22,7 +23,7 @@ describe('Exercise API', function() {
     section.dump();
     setTimeout(function() {
       expect(section.trackers.loop.calculated.duration / 1000).toBeLessThan(4.0);
-      done();      
+      done();
     }, 50)
     //var data = meas.endnmeas('loop');
 
