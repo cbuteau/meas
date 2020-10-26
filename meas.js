@@ -55,6 +55,18 @@ Object.freeze(OsFlags);
 var MEAS_TYPE = 'measure';
 var MARK_TYPE = 'mark';
 
+function TrackerProxy(section, name, options) {
+  this.name = name;
+  this.section = section;
+  this.section.start(name, options);
+}
+
+TrackerProxy.prototype = {
+  end: function() {
+    this.section.end(this.name);
+  }
+};
+
 function Tracker(perPtr, name, options) {
   this._perfPtr = perPtr;
   this.name = name;
@@ -164,6 +176,9 @@ function TrackerSection(perfPtr, name, trackerPrefix) {
 }
 
 TrackerSection.prototype = {
+  create: function(trackerName, options) {
+    return new TrackerProxy(this, trackerName, options);
+  },
   start: function(trackerName, options) {
     if (!this.enabled) {
       return;
