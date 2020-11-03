@@ -82,7 +82,11 @@ function Tracker(perPtr, name, options) {
 
 Tracker.prototype = {
   end: function() {
+    if (this.hasEnded) {
+      return;
+    }
     this._perfPtr.mark(this.endName);
+    this.hasEnded = true;
   },
   endnmeas: function(name) {
     this.end();
@@ -156,12 +160,14 @@ Tracker.prototype = {
       }
       var current = filtered[len2 - 1];
 
-      this.calculated = {
-        duration: current.duration
-      };
+      if (len2) {
+        this.calculated = {
+          duration: current.duration
+        };
 
-      var formatted2 = 'name=' + this.name + ', value=' + current.duration;
-      console.log(formatted2);
+        var formatted2 = 'name=' + this.name + ', value=' + current.duration;
+        console.log(formatted2);
+      }
     }
   }
 };
@@ -188,7 +194,7 @@ TrackerSection.prototype = {
 
     if (this.trackers[trackerName]) {
       // at least end the current before replacing.
-      this.trackers[trackerName].endnmeas();
+      this.trackers[trackerName].end();
     }
 
     this.trackers[trackerName] = new Tracker(this.perfPtr, prefixedName, options);
