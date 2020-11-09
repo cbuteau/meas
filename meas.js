@@ -228,7 +228,7 @@ TrackerSection.prototype = {
     if (check) {
       return check;
     } else {
-      var trackerPrefix = this.trackerPrefix + '.' + this.name;
+      var trackerPrefix = this.trackerPrefix + '.' + name;
       check = this.sections[name] = new TrackerSection(this.perfPtr, name, trackerPrefix);
     }
 
