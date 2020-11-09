@@ -454,6 +454,22 @@ TrackerManager.prototype = {
     return check;
   },
 
+  buildOrGetSection: function(sectionPath) {
+    var parts = sectionPath.split('.');
+
+    var section;
+    for (var i = 0; i < parts.length; i++) {
+      var currentSection = parts[i];
+      if (i === 0) {
+        section = this.addOrGetSection(currentSection);
+      } else {
+        section = section.addOrGetSection(currentSection);
+      }
+    }
+
+    return section;
+  },
+
   enable: function(enabled) {
     this.enabled = enabled;
 
