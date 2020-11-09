@@ -527,8 +527,13 @@ var meas;
 if (!meas) {
   meas = new TrackerManager();
   // global to both the possible frame and the console.
-  window.meas = meas;
-  window.top.meas = meas;
+  if (window) {
+    window.meas = meas;
+    window.top.meas = meas;
+  } else if (self) {
+    // web worker usage.
+    self.meas = meas;
+  }
 }
 
 // API does not work in nodejs...so only support
