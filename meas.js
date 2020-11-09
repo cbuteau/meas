@@ -375,7 +375,11 @@ function TrackerManager() {
   this.trackers = {};
   this.sections = {};
   this.perfHelper = new PerfHelper(this.perfPtr);
-  this.setPerfPtr(window.performance);
+  if (window) {
+    this.setPerfPtr(window.performance);
+  } else {
+    this.setPerfPtr(self.performance);
+  }
   this.enabled = true;
 }
 
