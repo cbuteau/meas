@@ -16,7 +16,10 @@ var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return
 var isIE = /*@cc_on!@*/false || !!document.documentMode;
 
 // Edge 20+
-var isEdge = !isIE && !!window.StyleMedia;
+//var isEdge = !isIE && !!window.StyleMedia;
+
+// Chrome Edge
+var isEdge = window.navigator.userAgentData && window.navigator.userAgentData.brands.filter(function(brand) { return brand.brand.indexOf('Microsoft Edge') !== -1; }).length > 0;
 
 // Chrome 1+
 // webstore vanished.

@@ -22,7 +22,7 @@ describe('Exercise API', function() {
     var data = meas.meas('loop');
 
     if (meas.BrowserFlags.isChrome) {
-      expect(data.duration).toBeLessThan(4.0);
+      expect(data.duration).toBeLessThan(4.8);
 
     } else if (meas.BrowserFlags.isFirefox) {
       expect(data.duration).toBeLessThan(13.1);
