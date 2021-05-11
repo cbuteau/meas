@@ -40,6 +40,6 @@
   "dependencies": {
     "karma-coverage": "1.1.2",
     "karma-jasmine-html-reporter": "1.4.2",
-    "lodash": "4.17.14"
+    "lodash": "4.17.21"
   }
 }
