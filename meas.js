@@ -23,7 +23,8 @@ var isEdge = window.navigator.userAgentData && window.navigator.userAgentData.br
 
 // Chrome 1+
 // webstore vanished.
-var isChrome = !!window.chrome //&& !!window.chrome.webstore;
+// explicit chrome versus edge.
+var isChrome = !!window.chrome && !isEdge //&& !!window.chrome.webstore;
 
 // Blink engine detection
 var isBlink = (isChrome || isOpera) && !!window.CSS;
