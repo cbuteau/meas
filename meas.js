@@ -200,6 +200,7 @@ TrackerSection.prototype = {
     if (this.trackers[trackerName]) {
       // at least end the current before replacing.
       this.trackers[trackerName].end();
+      this.trackers[trackerName].meas();
     }
 
     this.trackers[trackerName] = new Tracker(this.perfPtr, prefixedName, options);
